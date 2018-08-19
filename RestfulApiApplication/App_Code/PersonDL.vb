@@ -12,7 +12,7 @@ Public Class PersonDL
 
     Public Sub New()
         client = New MongoClient("mongodb://localhost/")
-        db = client.GetDatabase("RestfulApiDb")
+        db = client.GetServer().GetDatabase("RestfulApiDb")
 
     End Sub
 
@@ -95,9 +95,9 @@ Public Class PersonDL
         collection.Save(found)
     End Sub
 
-    Public Sub DeletePerson(person As Person)
+    Public Sub DeletePerson(ID As Integer)
         Dim collection As MongoCollection(Of BsonDocument) = db.GetCollection(Of BsonDocument)("Person")
-        Dim q = New QueryDocument("PersonID", person.ID)
+        Dim q = New QueryDocument("PersonID", ID)
         collection.Remove(q)
 
     End Sub
